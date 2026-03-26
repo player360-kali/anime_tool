@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(
   cors({
     // origin: ["http://localhost:5173", "http://172.22.200.2:5173"],
-    origin: process.env.UI_URL,
+    origin: [process.env.UI_URL || "https://anime-tool-xl3i.vercel.app/"],
     methods: ["GET", "PUT", "PATCH", "POST"],
     credentials: true,
   }),
