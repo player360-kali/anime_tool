@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { proxySegment, proxyStream } from "../services/proxy.service";
+import { proxySegment, proxyStream } from "../services/proxy.service.js";
 
 const proxyController = Router();
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getSlider } from "../services/slider.service";
+import { getSlider } from "../services/slider.service.js";
 
 const sliderController = Router();
 

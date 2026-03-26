@@ -4,7 +4,7 @@ import {
   getSingle,
   getStream,
   searchSeason,
-} from "../services/season.service";
+} from "../services/season.service.js";
 
 const seasonController = Router();
 

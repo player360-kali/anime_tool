@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import axiosClient from "../utils/axiosClient";
+import axiosClient from "../utils/axiosClient.js";
 import axios from "axios";
 
 export const searchSeason = async (req: Request, res: Response) => {
