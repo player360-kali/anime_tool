@@ -3,10 +3,10 @@ import express from "express";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
-import router from "./router/index.ts";
+import router from "./router/index";
 import morgan from "morgan";
-import proxyController from "./controller/proxy.controller.ts";
-import { streamController } from "./controller/stream.controller.ts";
+import proxyController from "./controller/proxy.controller";
+import { streamController } from "./controller/stream.controller";
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -37,6 +37,7 @@ const specs = swaggerJSDoc({
   apis: ["./routes/*.ts"],
 });
 
+app.get("/check", (_, res) => res.send("OK"));
 app.use("/api/", router);
 app.use("/api/proxy", proxyController);
 app.use("/api/stream", streamController);

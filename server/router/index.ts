@@ -1,7 +1,7 @@
 import { Router } from "express";
-import categoryController from "../controller/category.controller.ts";
-import sliderController from "../controller/slider.controller.ts";
-import seasonController from "../controller/season.controller.ts";
+import categoryController from "../controller/category.controller";
+import sliderController from "../controller/slider.controller";
+import seasonController from "../controller/season.controller";
 
 const router = Router();
 

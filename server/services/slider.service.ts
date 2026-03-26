@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import axiosClient from "../utils/axiosClient.ts";
+import axiosClient from "../utils/axiosClient";
 
 export const getSlider = async (_: Request, res: Response) => {
   try {
