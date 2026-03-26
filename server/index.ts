@@ -13,9 +13,18 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    // origin: ["http://localhost:5173", "http://172.22.200.2:5173"],
-    origin: [process.env.UI_URL || "https://anime-tool-xl3i.vercel.app/"],
-    methods: ["GET", "PUT", "PATCH", "POST"],
+    origin: (origin, callback) => {
+      const allowed = [
+        "http://localhost:5173",
+        "https://anime-tool-xl3i.vercel.app",
+      ];
+
+      if (!origin || allowed.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS blocked"));
+      }
+    },
     credentials: true,
   }),
 );
