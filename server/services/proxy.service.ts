@@ -1,9 +1,6 @@
 import axios from "axios";
 import type { Request, Response } from "express";
 
-const BASE_URL = process.env.BASE_URL;
-// example: https://anime-tool-eight.vercel.app
-
 const rewriteM3U8 = (content: string, baseUrl: string): string => {
   return content
     .split("\n")
@@ -12,15 +9,13 @@ const rewriteM3U8 = (content: string, baseUrl: string): string => {
 
       if (trimmed === "" || trimmed.startsWith("#")) return line;
 
-      const absoluteUrl = trimmed.startsWith("http")
-        ? trimmed
-        : baseUrl + trimmed;
+      const absoluteUrl = new URL(trimmed, baseUrl).toString();
 
       if (absoluteUrl.includes(".m3u8")) {
-        return `${BASE_URL}/api/proxy?url=${encodeURIComponent(absoluteUrl)}`;
+        return `${process.env.BASE_URL}/api/proxy?url=${encodeURIComponent(absoluteUrl)}`;
       }
 
-      return `${BASE_URL}/api/proxy/segment?url=${encodeURIComponent(absoluteUrl)}`;
+      return `${process.env.BASE_URL}/api/proxy/segment?url=${encodeURIComponent(absoluteUrl)}`;
     })
     .join("\n");
 };
@@ -47,27 +42,28 @@ export const proxyStream = async (req: Request, res: Response) => {
   }
 };
 
-export const proxySegment = async (req: Request, res: Response) => {
+export const proxySegment = async (req, res) => {
   try {
-    const url = req.query.url as string;
-    if (!url) return res.status(400).json({ message: "url required" });
+    const url = req.query.url;
 
     const response = await axios.get(url, {
       responseType: "stream",
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+        Referer: "https://anibla.uz",
+      },
     });
 
     res.setHeader(
       "Content-Type",
-      response.headers["content-type"] ?? "video/MP2T",
+      response.headers["content-type"] || "video/MP2T",
     );
-
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Accept-Ranges", "bytes");
-    res.setHeader("Cache-Control", "no-store");
 
     response.data.pipe(res);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Segment error" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Segment error");
   }
 };
