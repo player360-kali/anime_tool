@@ -50,7 +50,7 @@ app.use(morgan("dev"));
 app.get("/check", (_, res) => res.send("OK"));
 app.use("/api/", router);
 app.use("/api/proxy", proxyController);
-app.use("/api/stream", streamController);
+app.get("/api/stream", streamController);
 // app.use("/api/doc", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.listen(PORT, () => {
