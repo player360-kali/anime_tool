@@ -1,36 +1,29 @@
 import axios from "axios";
 import type { Request, Response } from "express";
 
+const BASE_URL = process.env.BASE_URL || "http://localhost:3001";
+
 export const streamController = async (req: Request, res: Response) => {
   try {
-    const url = req.query.url as string;
-    if (!url) return res.status(400).json({ message: "url required" });
+    const id = req.query.id as string;
+    if (!id) return res.status(400).json({ message: "id required" });
 
-    const response = await axios.get(url, { responseType: "text" });
+    const response = await axios.get<{ file: string; skip: string }>(
+      `https://anibla.uz/stream/${id}`,
+      { params: { format: "api" } },
+    );
 
-    console.log("=== RAW M3U8 ===");
-    console.log(response.data); // ← shu nima chiqaradi?
+    if (!response.data.file) {
+      return res.status(404).json({ message: "File not found" });
+    }
 
-    const baseUrl = url.substring(0, url.lastIndexOf("/") + 1);
-    const modified = (response.data as string)
-      .split("\n")
-      .map((line: string) => {
-        const trimmed = line.trim();
-        if (trimmed.startsWith("#") || trimmed === "") return line;
-        const absoluteUrl = trimmed.startsWith("http")
-          ? trimmed
-          : baseUrl + trimmed;
-        const proxied = `/api/proxy/segment?url=${encodeURIComponent(absoluteUrl)}`;
-        console.log(`segment: ${trimmed} → ${proxied}`); // ← mapping tekshirish
-        return proxied;
-      })
-      .join("\n");
-
-    res.setHeader("Content-Type", "application/vnd.apple.mpegurl");
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    return res.send(modified);
+    const proxyUrl = `${BASE_URL}/api/proxy?url=${encodeURIComponent(response.data.file)}`;
+    return res.status(200).json({
+      file: proxyUrl,
+      skip: response.data.skip,
+    });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Proxy error" });
+    return res.status(500).json({ message: "Internal error" });
   }
 };
