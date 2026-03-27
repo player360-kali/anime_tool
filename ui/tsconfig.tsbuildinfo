@@ -1,1 +1,0 @@
-{"root":["./src/api/category.ts","./src/api/search.ts","./src/api/sliders.ts","./src/config/env.ts","./src/constants/buttonVariants.ts","./src/lib/axiosClient.ts","./src/lib/utils.ts","./src/providers/queryClient.ts","./src/store/useHistory.ts","./src/store/useLike.ts","./src/types/env.d.ts","./src/types/global.ts"],"errors":true,"version":"5.9.3"}
