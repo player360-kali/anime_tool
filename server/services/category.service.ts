@@ -10,3 +10,13 @@ export const getCategories = async (_: Request, res: Response) => {
     return res.status(500).json({ message: "Internal error" });
   }
 };
+
+export const getJanr = async (_: Request, res: Response) => {
+  try {
+    const response = await axiosClient.get("/janr");
+    return res.status(response.status).json(response.data);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal error" });
+  }
+};

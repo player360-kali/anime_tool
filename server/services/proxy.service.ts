@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Request, Response } from "express";
 
-const BASE_URL = process.env.BASE_URL || "http://localhost:3001";
+const LOCAL_URL = process.env.LOCAL_URL;
 
 const rewriteM3U8 = (content: string, baseUrl: string): string => {
   return content
@@ -15,9 +15,9 @@ const rewriteM3U8 = (content: string, baseUrl: string): string => {
         : baseUrl + trimmed;
 
       if (absoluteUrl.includes(".m3u8")) {
-        return `${BASE_URL}/api/proxy?url=${encodeURIComponent(absoluteUrl)}`;
+        return `${LOCAL_URL}/api/proxy?url=${encodeURIComponent(absoluteUrl)}`;
       }
-      return `${BASE_URL}/api/proxy/segment?url=${encodeURIComponent(absoluteUrl)}`;
+      return `${LOCAL_URL}/api/proxy/segment?url=${encodeURIComponent(absoluteUrl)}`;
     })
     .join("\n");
 };

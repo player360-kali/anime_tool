@@ -158,6 +158,15 @@
     color: #ff006e;
 }
 
+img {
+    object-fit: cover;
+    user-select: none;
+    -moz-user-select: none;
+}
+button {
+    cursor: pointer;
+}
+
 a {
     position: relative;
 }

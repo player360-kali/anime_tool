@@ -1,9 +1,9 @@
 import { getCategory } from "@/api/category";
 import { useQuery } from "@tanstack/react-query";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import SkeletonCategory from "../skeleton/category";
-import { CardGroup } from "../card-group";
+import SkeletonCategory from "@/components/skeleton/category";
+import { CardGroup } from "@/components/card-group";
 
 const Category = () => {
   const { data: categories, isLoading: isCategoriesLoading } = useQuery({
@@ -19,7 +19,7 @@ const Category = () => {
   if (!categories?.data) return "No content";
 
   return (
-    <section className="w-full border-t-2 py-5">
+    <section className="w-full py-5">
       <div className="container mx-auto">
         <div className="flex flex-wrap gap-x-4 gap-y-2 justify-center">
           {categories.data.map((category) => (

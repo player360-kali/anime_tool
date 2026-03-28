@@ -1,4 +1,4 @@
-import type { CardType } from "@/types/global";
+import type { AnimeType, CardType } from "@/types/global";
 import { Eye, Star, Heart } from "lucide-react";
 import { ASSETS_URL } from "@/config/env";
 import { cn } from "@/lib/utils";
@@ -6,7 +6,7 @@ import { useLike } from "@/store/useLike";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-function AnimeCard({ card }: { card: CardType }) {
+function AnimeCard({ card }: { card: CardType | AnimeType }) {
   const toggle = useLike((s) => s.toggle);
   const isLiked = useLike((s) => s.isLiked(card._id));
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ function AnimeCard({ card }: { card: CardType }) {
   return (
     <div
       title={card.name.uz}
-      className="group relative aspect-2/3 rounded-xl overflow-hidden cursor-pointer border-2 border-border/80 bg-muted"
+      className="group relative aspect-2/3 rounded-xl overflow-hidden cursor-pointer border-2 border-border/80 bg-muted select-none"
       onClick={() => navigate("/anime/" + card._id)}
     >
       <img
@@ -50,7 +50,7 @@ function AnimeCard({ card }: { card: CardType }) {
       >
         <Heart
           className={cn(
-            "size-3.5 transition-all duration-200 cursor-pointer",
+            "size-3 transition-all duration-200 cursor-pointer",
             isLiked && "fill-current scale-110",
           )}
         />
@@ -58,7 +58,7 @@ function AnimeCard({ card }: { card: CardType }) {
 
       {card.category?.[1] && (
         <div className="absolute top-2 left-2">
-          <span className="text-[10px] font-medium px-2 py-0.5 rounded-md bg-primary/80 text-primary-foreground backdrop-blur-sm">
+          <span className="text-[12px] font-medium px-2 py-0.5 rounded-md bg-primary/80 text-primary-foreground backdrop-blur-sm">
             {card.category[1].nameuz}
           </span>
         </div>

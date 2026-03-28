@@ -53,9 +53,9 @@ const AnimePage = () => {
 
   return (
     <div className="w-full min-h-screen">
-      <div className="container mx-auto relative">
+      <div className="relative overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center scale-106"
+          className="absolute inset-0 bg-cover bg-center scale-110"
           style={{ backgroundImage: `url(${ASSETS_URL + anime.image})` }}
         >
           <div className="absolute inset-0 bg-background/80 backdrop-blur-2xl" />

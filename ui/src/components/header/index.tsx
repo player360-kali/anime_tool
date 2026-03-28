@@ -13,6 +13,7 @@ import {
 import { ASSETS_URL } from "@/config/env";
 import type { SliderTypes } from "@/types/global";
 import { useNavigate } from "react-router-dom";
+import { Eye } from "lucide-react";
 
 const Header = () => {
   const { data: sliders, isLoading: isSlidersLoading } = useQuery({
@@ -23,7 +24,7 @@ const Header = () => {
   if (isSlidersLoading) return <SliderSkeleton />;
   if (!sliders?.data) return "No content";
   return (
-    <header className="h-dvh">
+    <header className="h-dvh lg:h-[calc(100dvh-60px)]">
       <Carousel
         className="w-full h-full relative select-none"
         opts={{ loop: true }}
@@ -31,18 +32,18 @@ const Header = () => {
         <CarouselContent>
           {sliders.data.map((slides: SliderTypes) => (
             <CarouselItem key={slides._id}>
-              <div className="relative h-dvh md:h-[calc(100dvh-60px)] w-full">
+              <div className="relative h-dvh lg:h-[calc(100dvh-60px)] w-full">
                 <img
                   src={ASSETS_URL + slides.serial.screens.original[0]}
                   alt={slides.serial.name.uz}
                   className="w-full h-full object-cover"
                 />
 
-                <div className="h-full absolute inset-0 bg-linear-to-t from-black via-black/80 to-transparent" />
+                <div className="h-full border-b-2 absolute inset-0 bg-linear-to-t from-black via-black/80 to-transparent" />
 
-                <div className="w-full h-full px-5 flex flex-col items-center text-center absolute top-[60%] md:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  max-w-xl text-white">
+                <div className="w-full h-full px-5 flex flex-col items-center text-center absolute top-[60%] md:top-1/2 xl:top-[55%] 2xl:top-[60%] left-1/2 transform -translate-x-1/2 -translate-y-1/2  max-w-xl text-white">
                   <img
-                    className="w-75 h-75 border-4 rounded-xl object-cover cursor-pointer grayscale-25 hover:grayscale-0 transition-all duration-500 hover:scale-105"
+                    className="w-75 h-75 lg:w-full lg:h-50 2xl:w-full 2xl:h-100 border-4 rounded-xl object-cover cursor-pointer grayscale-25 hover:grayscale-0 transition-all duration-500 hover:scale-105"
                     src={ASSETS_URL + slides.serial.image}
                     onClick={() => navigate("/anime/" + slides.serial._id)}
                   />
@@ -58,10 +59,11 @@ const Header = () => {
                     {slides.serial.description.uz}
                   </p>
                   <Button
-                    className="w-full mt-8 md:hidden"
+                    className="w-full mt-8 font-bold"
                     onClick={() => navigate("/anime/" + slides.serial._id)}
                   >
                     Watch
+                    <Eye />
                   </Button>
                 </div>
               </div>

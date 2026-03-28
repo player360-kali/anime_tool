@@ -14,6 +14,7 @@ app.use(
     origin: (origin, callback) => {
       const allowed = [
         "http://localhost:5173",
+        "http://172.22.200.2:5173",
         "https://anime-tool-xl3i.vercel.app",
       ];
 
